@@ -154,7 +154,8 @@ DATETIME;
 DELETE FROM appointments
 WHERE pet_name = 'Simba the cat';
 
-/*UPDATE THE LASTNAME OF Dr. Sofia to reyes-gonzales*/
-UPDATE doctors
-SET lastname = 'reyes-gonzales'
-WHERE title = 'Dr.' AND first_name = 'Sofia';
+--dito
+
+/*list the species that the veterinary catered.*/
+SELECT DISTINCT species
+FROM patients;

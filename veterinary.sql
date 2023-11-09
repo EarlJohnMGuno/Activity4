@@ -149,3 +149,7 @@ ADD registereddate DATE;
 ALTER TABLE payments
 CHANGE paymentdate TO paymenttime
 DATETIME;
+
+/*simba the cat appointments have been cancelled. Write the query to remove his appointment.*/
+DELETE FROM appointments
+WHERE pet_name = 'Simba the cat';

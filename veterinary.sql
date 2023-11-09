@@ -153,3 +153,8 @@ DATETIME;
 /*simba the cat appointments have been cancelled. Write the query to remove his appointment.*/
 DELETE FROM appointments
 WHERE pet_name = 'Simba the cat';
+
+/*UPDATE THE LASTNAME OF Dr. Sofia to reyes-gonzales*/
+UPDATE doctors
+SET lastname = 'reyes-gonzales'
+WHERE title = 'Dr.' AND first_name = 'Sofia';

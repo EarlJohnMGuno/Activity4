@@ -129,8 +129,23 @@ VALUES (1,1,50.00,'09:30:00'),
 (9,9,60.00,'14:45:00'),
 (10,10,40,'11:30:00');
 
---dito
+INSERT INTO medicalrecords(recordid,animalid,recorddate,doctorid,diagnosis,prescription,notes)
+VALUES (1,1,'2023-01-05 00:00:00',1,'Healthy check-_','N/A','Regular check-up,no issues detected'),
+(2,2,'2023-01-10 00:00:00',1,'Vaccination','Vaccine X','Administered vaccination X as per schedule'),
+(3,3,'2023-02-02 00:00:00',3,'Sprained Leg','Pain medication','Rest recommendation for two weeks'),
+(4,4,'2023-02-15 00:00:00',1,'Dental Cleaning','N/A','Completed dental cleaning procedure'),
+(5,5,'2023-03-05 00:00:00',4,'Skin Infection','Antibiotics','Prescribed antibiotics for skin infection'),
+(6,6,'2023-03-10 00:00:00',2,'Flea Infestation','Flea treatment','Administered flea treatment'),
+(7,7,'2023-04-12 00:00:00',1,'Vaccination','Vaccine Y','Administered vaccination Y as per schedule'),
+(8,8,'2023-04-18 00:00:00',5,'Spaying','N/A','Succesfully performed spaying surgery'),
+(9,9,'2023-05-02 00:00:00',4,'Allergic reaction','Antihistamines','Allergic reaction due to food;prescribed antihistamin'),
+(10,10,'2023-05-20 00:00:00',6,'Conjunctivitis','Eye drops','Prescribed eye drop for conjuctivitis');
 
 /*ADD A NEW COLUMN NAME REGISTEREDDATE AS DATE IN THE OWNERS TABLE.*/
 ALTER TABLE owners
 ADD registereddate DATE;
+
+/*rename the COLUMN NAME paymentdate to paymenttime.*/
+ALTER TABLE payments
+CHANGE paymentdate TO paymenttime
+DATETIME;

@@ -154,8 +154,15 @@ DATETIME;
 DELETE FROM appointments
 WHERE pet_name = 'Simba the cat';
 
---dito
+/*UPDATE THE LASTNAME OF Dr. Sofia to reyes-gonzales*/
+UPDATE doctors
+SET lastname = 'reyes-gonzales'
+WHERE title = 'Dr.' AND first_name = 'Sofia';
 
 /*list the species that the veterinary catered.*/
 SELECT DISTINCT species
 FROM patients;
+
+/*list the total sales of the veterinary.*/
+SELECT SUM(sale_amount) AS total_sales
+FROM sales;

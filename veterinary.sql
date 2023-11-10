@@ -1,7 +1,5 @@
 CREATE DATABASE veterinary;
-
 CREATE TABLE owners (
-
 ownerid INT,
 ofirstname VARCHAR(50),
 olastname VARCHAR(50),
@@ -21,8 +19,7 @@ dateofbirth DATE,
 gender VARCHAR(10),
 color VARCHAR(50),
 ownerid INT,
-FOREIGN KEY ownerid REFERENCES owners(ownerid)
-
+FOREIGN KEY (ownerid) REFERENCES owners(ownerid)
 );
 
 CREATE TABLE appointments (
@@ -32,20 +29,28 @@ animalid INT,
 appointdate DATE,
 reason VARCHAR(255),
 PRIMARY KEY (appointid),
-FOREIGN KEY animalid REFERENCES animals(animalid)
-
+FOREIGN KEY (animalid) REFERENCES animals(animalid)
 );
 
 CREATE TABLE doctors (
 
-dortorid INT,
+doctorid INT,
 dfirstnames VARCHAR (50),
 dlastname VARCHAR (50),
 specialty VARCHAR (100),
 phone VARCHAR (15),
 email VARCHAR (100),
 PRIMARY KEY (doctorid)
+);
 
+CREATE TABLE invoices (
+
+invoiceid INT,
+appointid INT,
+totalamount NUMERIC(10,2),
+paymentdate TIME,
+PRIMARY KEY (invoiceid),
+FOREIGN KEY (appointid) REFERENCES appointments(appointid)
 );
 
 CREATE TABLE medicalrecords (
@@ -57,32 +62,8 @@ doctorid INT,
 diagnosis TEXT,
 prescription TEXT,
 notes TEXT,
-FOREIGN KEY animalid REFERENCES animals(animalid),
-FOREIGN KEY doctorid REFERENCES doctors(doctorid)
-
-);
-
-INSERT INTO animals(animalid, name, species, breed, dateofbirth, gender, color, ownerid),
-VALUES  (1,'Fido','Dog', 'Golden Retriever', '2018-0-15', 'Male', 'Golden', 1),
-(2,'Whiskers', 'Cat', 'Siamese', '2019-07-20', 'Female', 'Cream', 2),
-(3,'Rocky', 'Dog', 'German Shepherd', '2017-25-10', 'Male', 'Black and Tan', 3),
-(4,'Fluffy', 'Cat', 'Persian', '2020-01-30', 'Male', 'White', 4),
-(5,'Luna', 'Dog', 'Labrador Retriever', '2019-11-25', 'Female', 'Yellow' 5),
-(6,'Mochi', 'Cat', 'Maine Coon', '2018-09-12', 'Male', 'Browwn Tabby', 6),
-(7,'Bella', 'Dog', 'Poodle', '2020-04-05', 'Female', 'White', 7),
-(8,'Simba', 'Cat', 'Bengal', '2018-06-18', 'Male', 'Spotted Rosetted', 8,)
-(9,'Max', 'Dog', 'Dachshund', '2020-07-14', 'Male', 'Black and Tan', 9),
-(10,'Cleo', 'Cat', 'Ragdoll', '2019-12-22', 'Female', 'Seal Point', 10);
-
-CREATE TABLE invoices (
-
-invoicesid INT,
-appointid INT,
-totalamount NUMERIC(10,2),
-paymentdate TIME,
-PRIMARY KEY (invoiceid),
-FOREIGN KEY appointid REFERENCES appointments(appointid)
-
+FOREIGN KEY (animalid) REFERENCES animals(animalid),
+FOREIGN KEY (doctorid) REFERENCES doctors(doctorid)
 );
 
 INSERT INTO owners(ownerid,ofirstname,olastname,address,phone,email)
@@ -97,6 +78,18 @@ VALUES (1,'Juan','Dela Cruz','123 Main St,Manila','123-456-7890','juan@example.c
 (9,'Pedro','Santillan','888 Spruce St, Bacolod','888-777-6666','pedro@example.com'),
 (10,'Sofia','Villanueva','777 Walnut St, Iloilo','111-999-3333','sofia@example.com');
 
+INSERT INTO animals(animalid, name, species, breed, dateofbirth, gender, color, ownerid)
+VALUES  (1,'Fido','Dog', 'Golden Retriever', '2018-03-15', 'Male', 'Golden', 1),
+(2,'Whiskers', 'Cat', 'Siamese', '2019-07-20', 'Female', 'Cream', 2),
+(3,'Rocky', 'Dog', 'German Shepherd', '2017-05-10', 'Male', 'Black and Tan', 3),
+(4,'Fluffy', 'Cat', 'Persian', '2020-01-30', 'Male', 'White', 4),
+(5,'Luna', 'Dog', 'Labrador Retriever', '2019-11-25', 'Female', 'Yellow', 5),
+(6,'Mochi', 'Cat', 'Maine Coon', '2018-09-12', 'Male', 'Browwn Tabby', 6),
+(7,'Bella', 'Dog', 'Poodle', '2020-04-05', 'Female', 'White', 7),
+(8,'Simba', 'Cat', 'Bengal', '2018-06-18', 'Male', 'Spotted Rosetted', 8),
+(9,'Max', 'Dog', 'Dachshund', '2020-07-14', 'Male', 'Black and Tan', 9),
+(10,'Cleo', 'Cat', 'Ragdoll', '2019-12-22', 'Female', 'Seal Point', 10);
+
 INSERT INTO appointments (appointid, animalid, appointdate, reason)
  VALUES (1, 1, '2023-01-05', 'Annual check-up'),
 (2, 2, '2023-01-10', 'Vaccination'),
@@ -104,12 +97,12 @@ INSERT INTO appointments (appointid, animalid, appointdate, reason)
 (4, 4, '2023-02-15', 'Dental cleaning'),
 (5, 5, '2023-03-05', 'Skin condition'),
 (6, 6, '2023-03-10', 'Check for fleas'),
-(7, 7, '2023-04-12', 'Vaccination'),
+(7, 2, '2023-04-12', 'Vaccination'),
 (8, 8, '2023-04-18', 'Spraying/neutering'),
 (9, 9, '2023-05-02', 'Allergy treatment'),
 (10,10,'2023-05-20', 'Eye infection');
 
-INSERT INTO doctors(doctorid, dfirstname, dlastname, specialty, phone, email),
+INSERT INTO doctors(doctorid, dfirstnames, dlastname, specialty, phone, email)
 VALUES (1,'Dr. Maria', 'Santos', 'General Veterenarian', '987-654-3210', 'maria@example.com'),
 (2,'Dr. Antonio', 'Gonzales', 'Feline Specialist', '555-123-74567', 'antonio@example.com'),
 (3,'Dr. Felipe', 'Luna', 'Orthopedic Specialist', '111-222-3333', 'felipe@example.com'),
@@ -146,28 +139,27 @@ ALTER TABLE owners
 ADD registereddate DATE;
 
 /*rename the COLUMN NAME paymentdate to paymenttime.*/
-ALTER TABLE payments
-CHANGE paymentdate TO paymenttime
-DATETIME;
+ALTER TABLE invoices
+RENAME COLUMN paymentdate TO paymenttime;
 
 /*simba the cat appointments have been cancelled. Write the query to remove his appointment.*/
-DELETE FROM appointments
-WHERE pet_name = 'Simba the cat';
+DELETE FROM invoices WHERE appointid = 8;
+DELETE FROM appointments WHERE animalid = 8;
 
 /*UPDATE THE LASTNAME OF Dr. Sofia to reyes-gonzales*/
 UPDATE doctors
-SET lastname = 'reyes-gonzales'
-WHERE title = 'Dr.' AND first_name = 'Sofia';
+SET dlastname = 'reyes-gonzales'
+WHERE dfirstnames = 'Dr. Sofia';
 
 /*list the species that the veterinary catered.*/
 SELECT DISTINCT species
-FROM patients;
+FROM animals;
 
 /*list the total sales of the veterinary.*/
-SELECT SUM(sale_amount) AS total_sales
-FROM sales;
+SELECT SUM(totalamount) AS totalsales
+FROM invoices;
 
 /*list the total number of appointments made by the pet owner named maria*/
-SELECT COUNT(*) AS total_appointments
+SELECT COUNT(*) AS mariatotalappointments
 FROM appointments
-WHERE pet_owner = 'Maria';
+WHERE animalid = 2;
